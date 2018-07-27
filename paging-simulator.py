@@ -1,5 +1,15 @@
 import time
 
+def load_anim():
+    print("|", end="\r")
+    time.sleep(0.5)
+    print("/", end="\r")
+    time.sleep(0.5)
+    print("-", end="\r")
+    time.sleep(0.5)
+    print("\\", end="\r")
+    time.sleep(0.5)
+
 def hex2bin(hexdata):
     scale = 16 
     num_of_bits = 8
@@ -49,9 +59,12 @@ def optimal(processList, frames_size):
             replace = predict(frames, processList, idx + 1)
             frames[replace] = page
             misses += 1
-
+        
     print('n hits = ' + str(hits))
-    print('n misses c= ' + str(misses))            
+    print('n misses c= ' + str(misses))  
+
+def aprox_LRU(processList, frames_size):
+    pass
 
 #frames = int(input("Numero de frames: "))
 #page_size = int(input("Tamanho da página: "))
@@ -60,7 +73,13 @@ page_size = 16
 
 start_time = time.time()
 #processList = readFile(page_size)
-#optimal(processList, frames_size)
+processList = {0:7, 1:0, 2:1, 3:2, 4:0, 5:3, 6:0,7:4, 8:2, 9:3, 10:0, 11:3, 12:2 }
+
+print("--------------------Algoritmo Otimo-----------------------")
+optimal(processList, frames_size)
+print("--------------------LRU Aproximado-----------------------")
+aprox_LRU(processList, frames_size)
+
 exec_time = (time.time() - start_time)
 if exec_time > 60:
     print("---Execução: %s minutos ---" % ( exec_time / 60))
