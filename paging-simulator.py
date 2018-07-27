@@ -20,16 +20,9 @@ def readFile(page_size, path_file):
 def hashFile(page_size, path_file):
     d = defaultdict(list)
     a = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2]
-    tracker = 0
+
     for idx, value in enumerate(a):
-        d[value].append(tracker)
-        tracker += 1
-        """if value in d.keys():
-            d[value].append(tracker)
-            tracker += 1
-        else:
-            d[value].append(tracker)
-            tracker += 1"""
+        d[value].append(idx)
 
     print(d.items())
 
