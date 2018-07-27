@@ -8,19 +8,17 @@ def hex2bin(hexdata):
     return b
 
 def readFile(page_size, path_file):
-    d = {}
-    count = 1
+    d = []
     with open(path_file) as f:
         for line in f:
             (key, val) = line.split()
-            d[count] = hex2bin(key)[:page_size]
-            count += 1
+            d.append(hex2bin(key)[:page_size])
     return d
 
 def hashFile(page_size, path_file):
     d = defaultdict(list)
-    a = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2]
-
+    #a = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2]
+    a = readFile(page_size, path_file)
     for idx, value in enumerate(a):
         d[value].append(idx)
 
