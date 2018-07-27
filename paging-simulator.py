@@ -7,11 +7,13 @@ def hex2bin(hexdata):
     return b
 
 def readFile(page_size):
-    d = []
+    d = {}
+    count = 1
     with open('/home/medina/UNIOESTE/SO/traces/gcc.trace') as f:
         for line in f:
             (key, val) = line.split()
-            d.append(hex2bin(key)[:page_size])
+            d[count] = hex2bin(key)[:page_size]
+            count += 1
     return d
 
 def predict(frames, processList, idx):
@@ -33,27 +35,35 @@ def predict(frames, processList, idx):
 def optimal(processList, frames_size):
     frames = []
     hits = 0
-    for idx, page in enumerate(processList):
+    misses = 0
+    for idx, page in processList.items():
         if page in frames:
             hits += 1
             continue
 
         if len(frames) < frames_size:
             frames.append(page)
+            misses += 1
 
         else:
             replace = predict(frames, processList, idx + 1)
             frames[replace] = page
+            misses += 1
 
     print('n hits = ' + str(hits))
-    print('n misses = ' + str(len(processList) - hits))            
+    print('n misses c= ' + str(misses))            
 
-# frames = int(input())
-# page_size = int(input())
+#frames = int(input("Numero de frames: "))
+#page_size = int(input("Tamanho da página: "))
 frames_size = 4
 page_size = 16
 
 start_time = time.time()
-processList = readFile(page_size)
-optimal(processList, frames_size)
-print("--- %s seconds ---" % (time.time() - start_time))
+#processList = readFile(page_size)
+#optimal(processList, frames_size)
+exec_time = (time.time() - start_time)
+if exec_time > 60:
+    print("---Execução: %s minutos ---" % ( exec_time / 60))
+else:
+    print("---Execução: %s segundos ---" % exec_time)
+
