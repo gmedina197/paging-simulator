@@ -17,12 +17,12 @@ def readFile(page_size, path_file):
 
 def hashFile(page_size, path_file):
     d = defaultdict(list)
-    #a = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2]
-    a = readFile(page_size, path_file)
+    a = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2]
+    #a = readFile(page_size, path_file)
     for idx, value in enumerate(a):
         d[value].append(idx)
 
-    print(d.items())
+    return d
 
 def predict(frames, processList, idx):
     res = -1
@@ -61,8 +61,44 @@ def optimal(processList, frames_size):
     print('n hits = %s' % hits)
     print('n misses = %s' % misses) 
 
+def makeRefBytes(frames_size):
+    referenceBytes = []
+    for i in range(frames_size):
+        referenceBytes.append([0] * 8)
+    return referenceBytes
+
 def aprox_LRU(processList, frames_size):
-    pass
+    frames = []
+    referenceBytes = [0] * frames_size
+    hits = 0
+    misses = 0
+    for idx, page in processList.items():
+
+        if page in frames:
+            hits += 1
+            for i in range(frames_size):
+                referenceBytes[i] += 1
+
+            referenceBytes[frames.index(page)] = 0
+            continue
+
+        if len(frames) < frames_size:
+            frames.append(page)
+            misses += 1
+        
+        else:
+            replace = referenceBytes.index(max(referenceBytes))
+            frames[replace] = page
+            misses += 1
+            referenceBytes[replace] = 0
+        print(frames)
+        print(referenceBytes)
+        print('')
+
+
+
+    print('n hits = %s' % hits)
+    print('n misses = %s' % misses)
 
 #frames = int(input("Numero de frames: "))
 #page_size = int(input("Tamanho da página: "))
@@ -72,16 +108,17 @@ page_size = 16
 start_time = time.time()
 #processList = readFile(page_size, '/home/medina/UNIOESTE/SO/traces/gcc.trace')
 processList = { 0:7, 1:0, 2:1, 3:2, 4:0, 5:3, 6:0, 7:4, 8:2, 9:3, 10:0, 11:3, 12:2 }
-hashFile(page_size, '/home/medina/UNIOESTE/SO/traces/gcc.trace')
+#processList = hashFile(page_size, '/home/medina/UNIOESTE/SO/traces/gcc.trace')
+print(processList.items())
 
-""" print("--------------------Algoritmo Otimo-----------------------")
+print("--------------------Algoritmo Otimo-----------------------")
 optimal(processList, frames_size)
 print("--------------------LRU Aproximado-----------------------")
 aprox_LRU(processList, frames_size)
 
 exec_time = (time.time() - start_time)
 if exec_time > 60:
-    print("---Execução: %s minutos ---" % ( exec_time / 60))
+    print("--- Execução: %s minutos ---" % ( exec_time / 60))
 else:
-    print("---Execução: %s segundos ---" % exec_time) """
+    print("--- Execução: %s segundos ---" % exec_time)
 
