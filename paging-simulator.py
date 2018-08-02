@@ -1,5 +1,6 @@
-import time
 from collections import defaultdict
+import time
+
 
 def hex2bin(hexdata):
     scale = 16 
@@ -8,17 +9,19 @@ def hex2bin(hexdata):
     return b
 
 def readFile(page_size, path_file):
-    d = []
+    d = {}
+    count = 0
     with open(path_file) as f:
         for line in f:
             (key, val) = line.split()
-            d.append(hex2bin(key)[:page_size])
+            d[count] = (hex2bin(key)[:page_size])
+            count += 1
     return d
 
 def hashFile(page_size, path_file):
     d = defaultdict(list)
-    a = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2]
-    #a = readFile(page_size, path_file)
+    #a = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2]
+    a = readFile(page_size, path_file)
     for idx, value in enumerate(a):
         d[value].append(idx)
 
@@ -61,12 +64,6 @@ def optimal(processList, frames_size):
     print('n hits = %s' % hits)
     print('n misses = %s' % misses) 
 
-def makeRefBytes(frames_size):
-    referenceBytes = []
-    for i in range(frames_size):
-        referenceBytes.append([0] * 8)
-    return referenceBytes
-
 def aprox_LRU(processList, frames_size):
     frames = []
     referenceBytes = [0] * frames_size
@@ -76,10 +73,7 @@ def aprox_LRU(processList, frames_size):
 
         if page in frames:
             hits += 1
-            for i in range(frames_size):
-                referenceBytes[i] += 1
-
-            referenceBytes[frames.index(page)] = 0
+            referenceBytes[frames.index(page)] = 1
             continue
 
         if len(frames) < frames_size:
@@ -87,29 +81,22 @@ def aprox_LRU(processList, frames_size):
             misses += 1
         
         else:
-            replace = referenceBytes.index(max(referenceBytes))
+            replace = referenceBytes.index(min(referenceBytes))
             frames[replace] = page
             misses += 1
-            referenceBytes[replace] = 0
-        print(frames)
-        print(referenceBytes)
-        print('')
-
-
 
     print('n hits = %s' % hits)
     print('n misses = %s' % misses)
 
 #frames = int(input("Numero de frames: "))
 #page_size = int(input("Tamanho da página: "))
-frames_size = 4
+frames_size = 8
 page_size = 16
 
 start_time = time.time()
-#processList = readFile(page_size, '/home/medina/UNIOESTE/SO/traces/gcc.trace')
-processList = { 0:7, 1:0, 2:1, 3:2, 4:0, 5:3, 6:0, 7:4, 8:2, 9:3, 10:0, 11:3, 12:2 }
+processList = readFile(page_size, '/home/medina/UNIOESTE/SO/traces/gcc.trace')
+#processList = { 0:7, 1:0, 2:1, 3:2, 4:0, 5:3, 6:0, 7:4, 8:2, 9:3, 10:0, 11:3, 12:2 }
 #processList = hashFile(page_size, '/home/medina/UNIOESTE/SO/traces/gcc.trace')
-print(processList.items())
 
 print("--------------------Algoritmo Otimo-----------------------")
 optimal(processList, frames_size)
