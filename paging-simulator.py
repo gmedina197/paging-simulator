@@ -92,7 +92,7 @@ def aprox_lru(process_list, frames_size):
 # frames = int(input("Numero de frames: "))
 # page_size = int(input("Tamanho da página: "))
 path_file = "traces/bigone.trace"
-frames_size = 8
+frames_size = 400
 page_size = 16
 
 start_time = time.time()

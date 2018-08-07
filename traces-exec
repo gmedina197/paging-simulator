@@ -1,4 +1,4 @@
-bigone.trace
+Arquivo: bigone.trace
 Quantidade de páginas: 4000000
 --------------------Algoritmo Otimo-----------------------
 n hits = 3493434
@@ -7,8 +7,8 @@ n misses = 506566
 n hits = 1067094
 n misses = 2932906
 --- Execução: 49.53194037278493 minutos ---
-
-gcc.trace
+=======================================================================================
+Arquivo: gcc.trace
 Quantidade de páginas: 1000000
 --------------------Algoritmo Otimo-----------------------
 n hits = 865647
@@ -17,3 +17,33 @@ n misses = 134353
 n hits = 282643
 n misses = 717357
 --- Execução: 6.902768949667613 minutos ---
+=======================================================================================
+Arquivo: bzip.trace
+Quantidade de páginas: 1000000
+--------------------Algoritmo Otimo-----------------------
+n hits = 965139
+n misses = 34861
+--------------------LRU Aproximado-----------------------
+n hits = 357914
+n misses = 642086
+--- Execução: 3.59495476881663 minutos ---
+=======================================================================================
+Arquivo: sixpack.trace
+Quantidade de páginas: 1000000
+--------------------Algoritmo Otimo-----------------------
+n hits = 866877
+n misses = 133123
+--------------------LRU Aproximado-----------------------
+n hits = 201138
+n misses = 798862
+--- Execução: 8.15121609767278 minutos ---
+=======================================================================================
+Arquivo: swim.trace
+Quantidade de páginas: 1000000
+--------------------Algoritmo Otimo-----------------------
+n hits = 795770
+n misses = 204230
+--------------------LRU Aproximado-----------------------
+n hits = 323062
+n misses = 676938
+--- Execução: 5.086156864960988 minutos ---
