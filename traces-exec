@@ -1,0 +1,19 @@
+bigone.trace
+Quantidade de páginas: 4000000
+--------------------Algoritmo Otimo-----------------------
+n hits = 3493434
+n misses = 506566
+--------------------LRU Aproximado-----------------------
+n hits = 1067094
+n misses = 2932906
+--- Execução: 49.53194037278493 minutos ---
+
+gcc.trace
+Quantidade de páginas: 1000000
+--------------------Algoritmo Otimo-----------------------
+n hits = 865647
+n misses = 134353
+--------------------LRU Aproximado-----------------------
+n hits = 282643
+n misses = 717357
+--- Execução: 6.902768949667613 minutos ---

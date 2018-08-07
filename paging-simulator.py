@@ -9,6 +9,11 @@ def hex2bin(hexdata):
     return b
 
 
+def trace_name(path_file):
+    idx = path_file.rfind('/')
+    return path_file[idx+1:]
+
+
 def read_file(page_size, path_file):
     d = {}
     count = 0
@@ -17,16 +22,6 @@ def read_file(page_size, path_file):
             (key, val) = line.split()
             d[count] = (hex2bin(key)[:page_size])
             count += 1
-    return d
-
-
-def hash_file(page_size, path_file):
-    d = defaultdict(list)
-    # a = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2]
-    a = read_file(page_size, path_file)
-    for idx, value in enumerate(a):
-        d[value].append(idx)
-
     return d
 
 
@@ -96,13 +91,14 @@ def aprox_lru(process_list, frames_size):
 
 # frames = int(input("Numero de frames: "))
 # page_size = int(input("Tamanho da página: "))
+path_file = "traces/bigone.trace"
 frames_size = 8
 page_size = 16
 
 start_time = time.time()
-process_list = read_file(page_size, '/home/medina/paging-simulator/traces/gcc.trace')
-# processList = { 0:7, 1:0, 2:1, 3:2, 4:0, 5:3, 6:0, 7:4, 8:2, 9:3, 10:0, 11:3, 12:2 }
-# processList = hash_file(page_size, '/home/medina/UNIOESTE/SO/traces/gcc.trace')
+process_list = read_file(page_size, path_file)
+print("Arquivo: %s" % trace_name(path_file))
+print("Quantidade de páginas: %s" % len(process_list))
 
 print("--------------------Algoritmo Otimo-----------------------")
 optimal(process_list, frames_size)
