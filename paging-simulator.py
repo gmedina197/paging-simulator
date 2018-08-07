@@ -100,9 +100,9 @@ process_list = read_file(page_size, path_file)
 print("Arquivo: %s" % trace_name(path_file))
 print("Quantidade de páginas: %s" % len(process_list))
 
-print("--------------------Algoritmo Otimo-----------------------")
+print("-------------------- Algoritmo Otimo -----------------------")
 optimal(process_list, frames_size)
-print("--------------------LRU Aproximado-----------------------")
+print("-------------------- LRU Aproximado ------------------------")
 aprox_lru(process_list, frames_size)
 
 exec_time = (time.time() - start_time)
