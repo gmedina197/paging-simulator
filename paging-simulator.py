@@ -91,22 +91,22 @@ def aprox_lru(process_list, frames_size):
 
 # frames = int(input("Numero de frames: "))
 # page_size = int(input("Tamanho da página: "))
-path_file = "traces/bigone.trace"
-frames_size = 400
+path_file = "traces/swim.trace"
+frames_size = 4
 page_size = 16
 
-start_time = time.time()
 process_list = read_file(page_size, path_file)
 print("Arquivo: %s" % trace_name(path_file))
 print("Quantidade de páginas: %s" % len(process_list))
 
 print("-------------------- Algoritmo Otimo -----------------------")
+start_time_opt = time.time()
 optimal(process_list, frames_size)
-print("-------------------- LRU Aproximado ------------------------")
-aprox_lru(process_list, frames_size)
+optimal_time = (time.time() - start_time_opt)
+print("--- Execução: %s segundos ---" % optimal_time)
 
-exec_time = (time.time() - start_time)
-if exec_time > 60:
-    print("--- Execução: %s minutos ---" % (exec_time / 60))
-else:
-    print("--- Execução: %s segundos ---" % exec_time)
+print("-------------------- LRU Aproximado ------------------------")
+start_time_lru = time.time()
+aprox_lru(process_list, frames_size)
+lru_time = (time.time() - start_time_lru)
+print("--- Execução: %s segundos ---" % lru_time)
